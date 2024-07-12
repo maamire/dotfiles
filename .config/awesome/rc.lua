@@ -6,19 +6,12 @@ local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
 
--- Widget and layout library
 local wibox = require("wibox")
-
--- Theme handling library
 local beautiful = require("beautiful")
-
--- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
 
@@ -298,25 +291,27 @@ globalkeys = gears.table.join(
     ),
 
     -- Layout manipulation
-    awful.key({ modkey, "Mod1"   }, "j", function () awful.client.swap.bydirection("down")
+    awful.key({ modkey, "Mod1"   }, "j",
+        function ()
             local screen = awful.screen.focused()
             local tag = screen.selected_tag
                 if tag.layout == awful.layout.suit.max or tag.layout == awful.layout.suit.max.fullscreen then
                     awful.client.swap.byidx(-1)
                 else
                 awful.client.swap.bydirection("down")
-            end
+                end
         end,
               {description = "swap down", group = "client"}),
 
-    awful.key({ modkey, "Mod1"   }, "k", function () awful.client.swap.bydirection("up")
+    awful.key({ modkey, "Mod1"   }, "k", 
+        function ()
             local screen = awful.screen.focused()
             local tag = screen.selected_tag
                 if tag.layout == awful.layout.suit.max or tag.layout == awful.layout.suit.max.fullscreen then
                     awful.client.swap.byidx(1)
                 else
                 awful.client.swap.bydirection("up")
-            end
+                end
         end,
               {description = "swap up", group = "client"}),
 
@@ -338,11 +333,13 @@ globalkeys = gears.table.join(
                 client.focus:raise()
             end
         end,
-        {description = "go back", group = "client"}),
+              {description = "go back", group = "client"}),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey, "Control" }, "Return", function () awful.spawn("alacritty --class floating-term") end,
+              {description = "open a floating terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -378,7 +375,7 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () awful.util.spawn("rofi -show drun") end,
+    awful.key({ modkey },            "r",     function () awful.spawn("rofi -show drun") end,
               {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
@@ -395,8 +392,8 @@ globalkeys = gears.table.join(
                                                                 --awful.key({ modkey }, "p", function() menubar.show() end,
                                                                 --         {description = "show the menubar", group = "launcher"}),
 
-    awful.key({modkey}, "v", function() awful.util.spawn("alacritty -e 'pulsemixer'")end),
-    awful.key({modkey, "Shift" }, "s", function() awful.util.spawn("flameshot gui") end)
+    awful.key({modkey}, "v", function() awful.spawn("alacritty --class volume-term -e 'pulsemixer'")end),
+    awful.key({modkey, "Shift" }, "s", function() awful.spawn("flameshot gui") end)
 )
 
 clientkeys = gears.table.join(
@@ -517,7 +514,10 @@ clientbuttons = gears.table.join(
 root.keys(globalkeys)
 -- }}}
 
--- {{{ Rules
+    -- =======================================================
+    -- Rules
+    -- =======================================================
+    
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     -- All clients will match this rule.
@@ -527,6 +527,8 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
+                     maximized_vertical   = false,
+                     maximized_horizontal = false,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
@@ -550,7 +552,8 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+          "floating-term"},
          
 
 
@@ -570,19 +573,29 @@ awful.rules.rules = {
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = false }
     },
-
-    -- Set Firefox to always map on the tag named "2" on screen 1.
+    
+    { rule_any = { class = {"floating-term", "volume-term"} },
+        properties = {
+            focus     = awful.client.focus.filter, 
+            screen    = mouse.screen.preferred,
+            placement = awful.placement.no_offscreen + awful.placement.under_mouse,
+            floating  = true,
+            width     = 1200,
+            height    = 600
+            
+        }
+    },
 }
-
 
 -- }}}
 
--- {{{ Signals
+    -- =======================================================
+    -- Signals
+    -- =======================================================
+
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
-
-
-
+    
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
      if not awesome.startup then awful.client.setslave(c) end
@@ -638,16 +651,16 @@ end)
 
 beautiful.useless_gap = beautiful.useless_gap 
 beautiful.gap_single_client = false
--- Enable sloppy focus, so that focus follows mouse.
+-- Enable sloppy focus, so that focus follows class.
 client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("focus", function(c) c:raise() end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 --
-
 
     -- =======================================================
     -- Autostart Apps
@@ -661,6 +674,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
     -- Garbage Collection                                       
     -- ========================================================
 
-
     collectgarbage("setpause", 110)
     collectgarbage("setstepmul", 1000)
+
