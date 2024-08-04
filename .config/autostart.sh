@@ -9,4 +9,5 @@ run() {
 run "nm-applet"
 run "picom" -b
 run "$HOME/.fehbg"
+run "blueman-applet"
 # run "" 

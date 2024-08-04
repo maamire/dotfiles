@@ -14,7 +14,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 
 require("awful.hotkeys_popup.keys")
 
-
+local lain = require("lain")
+local markup = lain.util.markup
 
 --  Error handling
 if awesome.startup_errors then
@@ -71,10 +72,10 @@ awful.layout.layouts = {
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
  -- awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+ -- awful.layout.suit.corner.nw,
  -- awful.layout.suit.corner.ne,
  -- awful.layout.suit.corner.sw,
-    awful.layout.suit.corner.se,
+ -- awful.layout.suit.corner.se,
 }
 
 
@@ -111,7 +112,6 @@ mykeyboardlayout = awful.widget.keyboardlayout()
     --                      Wibar
     -- =======================================================
 
-mytextclock = wibox.widget.textclock()
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
@@ -192,8 +192,6 @@ awful.screen.connect_for_each_screen(function(s)
             spacing = beautiful.taglist_spacing,
             layout  = wibox.layout.fixed.horizontal
         },
-        forced_height = beautiful.taglist_height,
-        forced_width  = beautiful.taglist_width
 
     }
 
@@ -208,23 +206,119 @@ awful.screen.connect_for_each_screen(function(s)
                                 width  = beautiful.wibar_width,
                                 margins= beautiful.wibar_margin})
 
- 
+     
+
+    local my_textclock = wibox.widget {
+            {
+                {
+                    format  = '%H:%M',
+                    refresh = 1,
+                    font    = beautiful.clock_font,
+                    widget  = wibox.widget.textclock
+                },
+                halign = "center",
+                valign = "center",
+                widget = wibox.container.place
+            },
+            bottom = beautiful.underline_size,
+            color  = beautiful.underline_yellow,
+            widget = wibox.container.margin
+        }
+
+
+
+    local mem_widget = wibox.widget {
+                        { 
+                        font = "FiraMono Nerd Font 10",
+                        id = "textbox",
+                        widget = wibox.widget.textbox,
+                        },
+    
+            {           
+                
+                halign = "center",
+                valign = "center",
+                widget = wibox.container.place
+            },
+            bottom = beautiful.underline_size,
+            color  = beautiful.underline_yellow,
+            widget = wibox.container.margin
+        
+        }
+        
+    local cpu_widget = wibox.widget {
+                        { 
+                        font = "FiraMono Nerd Font 10",
+                        id = "textbox",
+                        widget = wibox.widget.textbox,
+                        },
+    
+            {           
+                
+                halign = "center",
+                valign = "center",
+                widget = wibox.container.place
+            },
+            bottom = beautiful.underline_size,
+            color  = beautiful.underline_yellow,
+            widget = wibox.container.margin
+        
+        }
+        
+    local mem = lain.widget.mem({
+        settings = function()
+            mem_widget.textbox:set_text("\u{efc5}  " .. mem_now.used .. " ")
+        end
+    })
+
+    local cpu = lain.widget.cpu({
+        settings = function()
+            cpu_widget.textbox:set_text("\u{f4bc}  " .. cpu_now.usage .. " ")
+        end
+    })
+    
+    local mysystray = wibox.widget {
+        {
+        base_size = 35,
+        widget = wibox.widget.systray,
+        },
+
+    halign = "center",
+    valign = "center",
+    widget = wibox.container.place
+    }
+
+    local tbox_separator = wibox.widget.textbox("|")
+    local l_sep = wibox.widget.textbox(" [ ")
+    local m_sep = wibox.widget.textbox(" ][ ")
+    local r_sep = wibox.widget.textbox(" ] ")
+
+
+
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
-        
+        expand = "none", 
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             s.mytaglist,
             s.mypromptbox,
+            s.mylayoutbox,
         },
        
-        wibox.container.place( mytextclock, center, center),
-       
+        {
+        layout = wibox.layout.fixed.horizontal,
+        my_textclock,
+        },
+
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
-            wibox.widget.systray(),
-            s.mylayoutbox,
+            tbox_separator,
+            cpu_widget,
+            tbox_separator,
+            mem_widget,
+            tbox_separator,
+            mysystray
         },
     }
 end)
@@ -585,11 +679,15 @@ awful.rules.rules = {
             
         }
     },
+    
+    { rule = { class = "firefox" },
+        properties = { opacity = 1, maximized = false, floating = false } 
+    },
 }
 
 -- }}}
 
-    -- =======================================================
+    -- ======================================================
     -- Signals
     -- =======================================================
 
@@ -651,13 +749,12 @@ end)
 
 beautiful.useless_gap = beautiful.useless_gap 
 beautiful.gap_single_client = false
--- Enable sloppy focus, so that focus follows class.
+-- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("focus", function(c) c:raise() end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 --

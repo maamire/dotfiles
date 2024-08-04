@@ -14,9 +14,9 @@ local theme = {}
     --                          Fonts                               
     -- =============================================================
 
-theme.font          = "SpaceMono Nerd Font 14"
-theme.taglist_font  = "SpaceMono Nerd Font Bold 12"
-
+theme.font          = "FiraMono Nerd Font 15"
+theme.taglist_font  = "FiraMono Nerd Font Bold 13"
+theme.clock_font    = "FiraMono Nerd Font Mono Medium 16"
 
     -- =============================================================
     --                          Colours
@@ -40,6 +40,9 @@ theme.border_width  = dpi(0.5)
 theme.border_normal = "#000000"
 theme.border_focus  = "#B7CBF4"
 theme.border_marked = "#91231c"
+
+theme.underline_size   = 3
+theme.underline_yellow = "#F0D50C"
 
 -- There are other variable sets
 -- overriding the default one when
