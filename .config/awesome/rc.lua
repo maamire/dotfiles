@@ -40,7 +40,7 @@ do
 end
 
     -- =======================================================
-    -- Variable Definitions 
+    -- Variable Definitions
     -- =======================================================
 
 
@@ -199,14 +199,14 @@ awful.screen.connect_for_each_screen(function(s)
     -- =======================================================
     --                      Widget Setup
     -- =======================================================
- 
 
-    s.mywibox = awful.wibar({ position = "top", screen = s, 
+
+    s.mywibox = awful.wibar({ position = "top", screen = s,
                                 height = beautiful.wibar_height,
                                 width  = beautiful.wibar_width,
                                 margins= beautiful.wibar_margin})
 
-     
+
 
     local my_textclock = wibox.widget {
             {
@@ -228,14 +228,14 @@ awful.screen.connect_for_each_screen(function(s)
 
 
     local mem_widget = wibox.widget {
-                        { 
+                        {
                         font = "FiraMono Nerd Font 10",
                         id = "textbox",
                         widget = wibox.widget.textbox,
                         },
-    
-            {           
-                
+
+            {
+
                 halign = "center",
                 valign = "center",
                 widget = wibox.container.place
@@ -243,18 +243,18 @@ awful.screen.connect_for_each_screen(function(s)
             bottom = beautiful.underline_size,
             color  = beautiful.underline_yellow,
             widget = wibox.container.margin
-        
+
         }
-        
+
     local cpu_widget = wibox.widget {
-                        { 
+                        {
                         font = "FiraMono Nerd Font 10",
                         id = "textbox",
                         widget = wibox.widget.textbox,
                         },
-    
-            {           
-                
+
+            {
+
                 halign = "center",
                 valign = "center",
                 widget = wibox.container.place
@@ -262,9 +262,9 @@ awful.screen.connect_for_each_screen(function(s)
             bottom = beautiful.underline_size,
             color  = beautiful.underline_yellow,
             widget = wibox.container.margin
-        
+
         }
-        
+
     local mem = lain.widget.mem({
         settings = function()
             mem_widget.textbox:set_text("\u{efc5}  " .. mem_now.used .. " ")
@@ -276,7 +276,7 @@ awful.screen.connect_for_each_screen(function(s)
             cpu_widget.textbox:set_text("\u{f4bc}  " .. cpu_now.usage .. " ")
         end
     })
-    
+
     local mysystray = wibox.widget {
         {
         base_size = 35,
@@ -297,14 +297,14 @@ awful.screen.connect_for_each_screen(function(s)
 
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
-        expand = "none", 
+        expand = "none",
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             s.mytaglist,
             s.mypromptbox,
             s.mylayoutbox,
         },
-       
+
         {
         layout = wibox.layout.fixed.horizontal,
         my_textclock,
@@ -397,7 +397,7 @@ globalkeys = gears.table.join(
         end,
               {description = "swap down", group = "client"}),
 
-    awful.key({ modkey, "Mod1"   }, "k", 
+    awful.key({ modkey, "Mod1"   }, "k",
         function ()
             local screen = awful.screen.focused()
             local tag = screen.selected_tag
@@ -537,7 +537,7 @@ clientkeys = gears.table.join(
         awful.key({ modkey, "Shift" }, "Left", function () awful.client.incwfact(-0.05) end),
         awful.key({ modkey, "Shift" }, "Right", function () awful.client.incwfact(0.05) end)
 
-       
+
 )
 
 -- Bind all key numbers to tags.
@@ -611,7 +611,7 @@ root.keys(globalkeys)
     -- =======================================================
     -- Rules
     -- =======================================================
-    
+
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     -- All clients will match this rule.
@@ -648,7 +648,7 @@ awful.rules.rules = {
           "veromix",
           "xtightvncviewer",
           "floating-term"},
-         
+
 
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -667,21 +667,21 @@ awful.rules.rules = {
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = false }
     },
-    
+
     { rule_any = { class = {"floating-term", "volume-term"} },
         properties = {
-            focus     = awful.client.focus.filter, 
+            focus     = awful.client.focus.filter,
             screen    = mouse.screen.preferred,
             placement = awful.placement.no_offscreen + awful.placement.under_mouse,
             floating  = true,
             width     = 1200,
             height    = 600
-            
+
         }
     },
-    
+
     { rule = { class = "firefox" },
-        properties = { opacity = 1, maximized = false, floating = false } 
+        properties = { opacity = 1, maximized = false, floating = false }
     },
 }
 
@@ -693,7 +693,7 @@ awful.rules.rules = {
 
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
-    
+
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
      if not awesome.startup then awful.client.setslave(c) end
@@ -747,7 +747,7 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
-beautiful.useless_gap = beautiful.useless_gap 
+beautiful.useless_gap = beautiful.useless_gap
 beautiful.gap_single_client = false
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
@@ -768,7 +768,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 
     -- ========================================================
-    -- Garbage Collection                                       
+    -- Garbage Collection
     -- ========================================================
 
     collectgarbage("setpause", 110)

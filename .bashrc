@@ -13,5 +13,5 @@ PS1='[\u@\h \W]\$ '
 
 EDITOR=/usr/bin/vim
 export EDITOR
-alias dotfiles='/usr/bin/git --git-dir="$HOME/.dotfiles" --work-tree="$HOME"'
+alias dotfiles='/usr/bin/git --git-dir="/home/zp/.dotfiles" --work-tree="/home/zp"'
 

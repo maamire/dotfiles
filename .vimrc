@@ -2,9 +2,9 @@
 "
 "                     _    ________  ___   ____  ______
 "                    | |  / /  _/  |/  /  / __ \/ ____/
-"                    | | / // // /|_/ /  / /_/ / /     
-"                    | |/ // // /  / /  / _, _/ /___   
-"                    |___/___/_/  /_/  /_/ |_|\____/   
+"                    | | / // // /|_/ /  / /_/ / /
+"                    | |/ // // /  / /  / _, _/ /___
+"                    |___/___/_/  /_/  /_/ |_|\____/
 "
 "
 "  ============================================================================
@@ -30,9 +30,25 @@
 
     Plug 'lervag/vimtex'
     Plug 'sirver/ultisnips'
+    Plug 'vim-airline/vim-airline'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'tpope/vim-commentary'
 
+    ""# Lsp
+    Plug 'prabirshrestha/vim-lsp'
+    Plug 'mattn/vim-lsp-settings'
     call plug#end()
 
+    function! s:on_lsp_buffer_enabled() abort
+        setlocal omnifunc=lsp#complete
+    endfunction
+
+
+    augroup lsp_install
+        au!
+        autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+    augroup END
     "" ========================================================================
     ""                          vimtex
     "" ========================================================================
@@ -83,13 +99,17 @@
     ""set wrap
     set nowrap
 
+    "" Remove Trailing Whitespaces
+    command! FixWhitespace :%s/\s\+$//e
+
+
     "" ========================================================================
     ""                          Cursor
     "" ========================================================================
-    
+
     set cursorline
     set cursorcolumn
-    set scrolloff=999 
+    set scrolloff=999
 
     "" ========================================================================
     ""                          Search
