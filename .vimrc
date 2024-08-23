@@ -28,12 +28,16 @@
 
     call plug#begin()
 
+    ""#Colourschemes
+    Plug 'jaredgorski/spacecamp'
+
     Plug 'lervag/vimtex'
     Plug 'sirver/ultisnips'
     Plug 'vim-airline/vim-airline'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'tpope/vim-commentary'
+
 
     ""# Lsp
     Plug 'prabirshrestha/vim-lsp'
