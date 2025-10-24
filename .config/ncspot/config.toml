@@ -1,0 +1,38 @@
+# vim: ft=cfg
+# Basic options
+default_keybindings= true
+use_nerdfont = true
+notify = false
+gapless = true
+flip_status_indicatiors = false
+
+
+[keybindings]
+
+#################################
+# Volume 
+#################################
+
+"=" = "volup 1"
+"-" = "voldown 1"
+"[" = "voldown 5"
+"]" = "volup 5"
+
+
+[theme]
+background = "#121212"
+primary = "#D0D0D0"
+secondary = "#D8FA3B"
+title = "#F0D50C"
+playing = "#F0D50C"
+playing_selected = "#0D0D0D"
+playing_bg = "#181818"
+highlight = "#0D0D0D"
+highlight_bg = "#57BA37"
+error = "#D0D0D0"
+error_bg = "#FF0000"
+statusbar = "#F0D50C"
+statusbar_progress = "#00AC4C"
+statusbar_bg = "#121212"
+cmdline = "#121212"
+cmdline_bg = "#DEDEDE"
