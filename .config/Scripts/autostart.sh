@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Prevent duplicates
 run() {
     if ! pgrep -f "$1"; then
         "$@" &

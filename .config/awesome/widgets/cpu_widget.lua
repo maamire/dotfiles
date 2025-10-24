@@ -1,6 +1,6 @@
 --
 --
---      Battery Widget
+--      CPU Widget
 --
 --
 

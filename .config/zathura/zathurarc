@@ -1,33 +1,29 @@
 # General Settings
-#set adjust-open best-fit          # Automatically adjust to best-fit when opening a document
-set scroll-step 50                # Set scroll speed (adjust as needed)
-set guioptions s                  # Show status bar (use "hv" to show both scrollbars)
+#set adjust-open best-fit
+set scroll-step 50
+set guioptions s
 
 # Zoom Settings
-set zoom-step 2                 # Set the zoom step for zoom in/out
+set zoom-step 2
 set zoom-min 1
 
 set window-width 40
 set window-width 25
 
 # Database Settings
-set database sqlite               # Use SQLite for saving bookmarks and history (if supported)
+set database sqlite
 
 
 # Keybinds
 map = zoom in
 map + zoom default
 
-# Colours
-
-# Enable recolor by default for PDF content
+# Colours (Warm)
 set recolor                     "true"
 
-# Warm gray/tan theme
-set recolor-lightcolor          "#dcd7ba"  # warm tan background
-set recolor-darkcolor           "#2d2a2e"  # dark gray text
+set recolor-lightcolor          "#dcd7ba"
+set recolor-darkcolor           "#2d2a2e"
 
-# UI colors to match
 set default-bg                  "#dcd7ba"
 set default-fg                  "#2d2a2e"
 

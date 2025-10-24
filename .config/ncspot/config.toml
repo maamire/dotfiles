@@ -10,7 +10,7 @@ flip_status_indicatiors = false
 [keybindings]
 
 #################################
-# Volume 
+# Volume
 #################################
 
 "=" = "volup 1"

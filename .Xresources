@@ -1,9 +1,8 @@
-
 ! ~/.Xresources
 
 Xft.dpi: 144
 
-! Special colors
+! Basic
 *.foreground:   #b7b8b9
 *.background:   #121212
 *.cursorColor:  #b7b8b9
