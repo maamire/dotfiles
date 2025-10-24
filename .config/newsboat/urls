@@ -8,8 +8,9 @@ https://archlinux.org/feeds/news/ Arch Tech News
 https://www.youtube.com/feeds/videos.xml?channel_id=UC5UAwBUum7CPN5buc-_N1Fw
 https://vkc.sh/feed/
 
+# Vim
+https://vimtricks.com/feed/
+
 # General
 https://ludic.mataroa.blog/rss/
 "query:Unread Articles:unread = \"yes\""
-
-

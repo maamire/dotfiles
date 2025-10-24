@@ -1,0 +1,81 @@
+# AwesomeWM
+.config/awesome/lain/
+.config/awesome/test
+
+# Systemd
+.config/systemd/user/*.wants/
+.config/systemd/user/*.requires/
+.config/systemd/user/*.d/
+
+# Vim plugin
+.vim/plugged/
+.vim/backup/
+.vim/swap/
+.vim/undo/
+.vim/.netrwhist
+.tmux/plugins/
+
+# Cache
+.cache/
+.local/share/
+.local/state/
+.mozilla/
+.pki/
+
+# Browser
+.config/BraveSoftware/
+.config/google-chrome/
+.config/chromium/
+
+# Text editors
+.config/Code/
+.config/VSCodium/
+.vscode/
+
+# Messaging
+.config/discord/
+.config/Discord/
+.config/discordcanary/
+.config/discord-screenaudio/
+.config/vesktop/
+.config/Slack/idea/
+
+# Authentication
+.config/nordvpn/
+.config/rustdesk/
+.config/spotify/
+.ssh/
+.gnupg/
+.password-store/
+
+# Misc (hardware)
+.config/pulse/
+.config/wireplumber/
+.config/dconf/
+.config/autostart/
+.config/Electron/
+
+# Misc (other)
+.config/unity3d/
+.config/obs-studio/scenes/
+.config/koreader/
+.config/ObinsKit/
+.config/mpv/scripts/
+.config/mpv/fonts/uosc*
+
+# Backup
+*.bak
+
+# Temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Log
+*.log
+
+Node/NPM
+node_modules/
+npm-debug.log*

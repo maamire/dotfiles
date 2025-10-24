@@ -1,0 +1,41 @@
+
+! ~/.Xresources
+
+Xft.dpi: 144
+
+! Special colors
+*.foreground:   #b7b8b9
+*.background:   #121212
+*.cursorColor:  #b7b8b9
+
+! Black
+*.color0:       #2e2e2e
+*.color8:       #5d5d5d
+
+! Red
+*.color1:       #e35143
+*.color9:       #e35143
+
+! Green
+*.color2:       #7bb934
+*.color10:      #7bb934
+
+! Yellow
+*.color3:       #f2b63c
+*.color11:      #f2b63c
+
+! Blue
+*.color4:       #489ccf
+*.color12:      #489ccf
+
+! Magenta
+*.color5:       #d961dc
+*.color13:      #d961dc
+
+! Cyan
+*.color6:       #59b9b9
+*.color14:      #59b9b9
+
+! White
+*.color7:       #b7b8b9
+*.color15:      #e8e9ed
