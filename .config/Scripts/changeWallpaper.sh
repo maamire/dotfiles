@@ -10,4 +10,6 @@ if [ ! -f "$CACHE_FILE" ] || [ $(find "$CACHE_FILE" -mmin +60 2>/dev/null | wc -
 fi
 
 WALLPAPER=$(shuf -n 1 "$CACHE_FILE")
-nice -n 19 ionice -c 3 feh --no-fehbg --bg-fill "$WALLPAPER"
+if [ -n "$WALLPAPER" ] && [ -f "$WALLPAPER" ]; then
+    nice -n 19 ionice -c 3 feh --no-fehbg --bg-fill "$WALLPAPER"
+fi
